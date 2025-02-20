@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import {mockArticles} from "@/data/mock";
 
 const api = axios.create({
     baseURL: process.env.BACKEND_URL,
@@ -12,20 +13,7 @@ const api = axios.create({
 export async function GET() {
     try {
         const articles = process.env.NODE_ENV === 'development' ?
-            [
-                {
-                    id: '1',
-                    title: 'Article Title',
-                    tags: ['tag1', 'tag2'],
-                    body: 'Article Body',
-                },
-                {
-                    id: '2',
-                    title: 'Article Title 2',
-                    tags: ['tag1', 'tag2'],
-                    body: 'Article Body 2',
-                }
-            ] :
+            mockArticles :
             (await api.get(`/articles`)).data;
 
         return NextResponse.json(articles);

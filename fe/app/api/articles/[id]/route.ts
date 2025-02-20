@@ -1,5 +1,6 @@
-import {FetchArticleRequest, FetchArticleResponse} from "@/app/lib/types";
 import axios from "axios";
+import {mockArticles} from "@/data/mock";
+import {NextRequest, NextResponse} from "next/server";
 
 const api = axios.create({
     baseURL: process.env.BACKEND_URL,
@@ -9,20 +10,15 @@ const api = axios.create({
     },
 })
 
-export async function GET(request: FetchArticleRequest): Promise<FetchArticleResponse> {
+export async function GET(req: NextRequest ){
     try {
-         if (process.env.NODE_ENV === 'development') {
-             return Promise.resolve({
-                    id: '1',
-                    title: 'Article Title',
-                    tags: ['tag1', 'tag2'],
-                    body: 'Article Body',
-                }
-            )
-        } else {
-            const response = await api.get(`/articles/${request.id}`);
-            return response.data as FetchArticleResponse;
-        }
+        const url = new URL(req.url);
+        const id = url.pathname.split("/").pop();
+
+        const article = process.env.NODE_ENV === 'development' ?
+            mockArticles.find(article => article.id === id) :
+            (await api.get(`/articles/${id}`)).data;
+        return NextResponse.json(article);
     } catch (error) {
         console.log(error);
         throw new Error('Failed to fetch article data.');

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {FetchArticleResponse} from "@/app/lib/types";
+import {ArticleCard} from "@/app/components/articleCard";
 
 const api = axios.create({
     baseURL: process.env.FE_URL,
@@ -21,15 +22,12 @@ async function fetchArticles() {
 export default async function Page() {
     const articles = await fetchArticles();
     return (
-        <main className="flex min-h-screen flex-col p-6">
-            <div>
-                {articles?.map((article) =>
-                    <div key={article.id} className="p-4 border rounded-lg shadow mb-4">
-                        <div>Title: {article.title}</div>
-                        <div>Tags: {article.tags.join(", ")}</div>
-                        <div>Body: {article.body}</div>
-                    </div>
-                )}
+        <main className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold mb-6">ブログ記事一覧</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {articles?.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                ))}
             </div>
         </main>
     );
