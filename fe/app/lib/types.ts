@@ -7,4 +7,6 @@ export type FetchArticleResponse = {
     title: string;
     tags: string[];
     body: string;
+    thumbnail: string;
+    date: string;
 }
