@@ -1,7 +1,7 @@
 import axios from "axios";
 import {FetchArticleResponse} from "@/app/lib/types";
 import Image from "next/image";
-import TagsList from "@/app/components/tagsList";
+import TagsList from "@/app/ui/tagsList";
 
 const api = axios.create({
     baseURL: process.env.FE_URL,
