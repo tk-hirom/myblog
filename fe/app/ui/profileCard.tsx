@@ -1,3 +1,6 @@
+import Link from "next/link";
+import Image from "next/image";
+
 const ProfileCard = () => {
     return (
         <div className="bg-white shadow-md rounded-2xl p-6 text-center">
@@ -11,7 +14,14 @@ const ProfileCard = () => {
             <p className="text-gray-600 mt-2">I work for a Japanese big company as a member of engineers.</p>
             <div className="mt-4 flex justify-center gap-3">
                 <a href="https://twitter.com" className="text-blue-500 hover:underline">Twitter</a>
-                <a href="https://github.com" className="text-gray-900 hover:underline">GitHub</a>
+                <Link href="https://github.com/tk-hirom" className="text-gray-900 hover:underline">
+                    <Image
+                        src="/github-mark.png"
+                        alt={"GitHub"}
+                        width={24}
+                        height={24}
+                    ></Image>
+                </Link>
             </div>
         </div>
     );
