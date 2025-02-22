@@ -10,7 +10,7 @@ const api = axios.create({
     },
 })
 
-export async function GET(req: NextRequest ){
+export async function GET(req: NextRequest){
     try {
         const url = new URL(req.url);
         const id = url.pathname.split("/").pop();

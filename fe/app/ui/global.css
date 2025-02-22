@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #176aff; /* TODO 要検討 */
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
