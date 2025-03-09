@@ -1,0 +1,29 @@
+<mapper namespace="com.backend.app.infra.mapper.ArticleMapper">
+    <resultMap id="articleResultMap" type="com.backend.app.infra.entity.ArticleDto">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="thumbnail_path" property="thumbnailPath" />
+        <result column="updated_at" property="updatedAt" />
+        <collection property="tags" resultMap="articleTag" />
+    </resultMap>
+    <resultMap type="com.backend.app.infra.entity.ArticleTagDto" id="articleTag">
+        <id column="article_id" property="id.articleId" />
+        <id column="tag_id" property="id.tagId" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <select id="selectArticles" resultMap="articleResultMap">
+        SELECT
+            a.id,
+            a.title,
+            a.thumbnail_path,
+            a.updated_at,
+            t.article_id,
+            t.tag_id,
+            tags.name
+        FROM
+            articles a
+        LEFT JOIN articles_tags t ON a.id = t.article_id
+        LEFT JOIN tags ON t.tag_id = tags.id
+    </select>
+</mapper>

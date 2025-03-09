@@ -1,28 +1,13 @@
 import {NextRequest, NextResponse} from "next/server";
-import axios from "axios";
-import {mockArticles} from "@/data/mock";
-
-const api = axios.create({
-    baseURL: process.env.BACKEND_URL,
-    timeout: 1000,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
+import axiosInstance from "@/app/lib/axiosInstance";
+import {ENDPOINTS} from "@/app/constants/endpoints";
 
 export async function GET(req: NextRequest) {
     try {
         const url = new URL(req.url);
         const queryParams = new URLSearchParams(url.search);
         const query = queryParams.get('query');
-
-        const articles = process.env.NODE_ENV === 'development' ?
-            mockArticles :
-            (await api.get(
-                query?
-                    `/articles?${query}`:
-                    `/articles`)
-            ).data;
+        const articles = (await axiosInstance.get(ENDPOINTS.BE.ARTICLES(query))).data;
 
         return NextResponse.json(articles);
     } catch (error) {

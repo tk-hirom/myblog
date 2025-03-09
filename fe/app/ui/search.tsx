@@ -2,20 +2,23 @@
 
 import {MagnifyingGlassIcon} from '@heroicons/react/24/outline';
 import {usePathname, useSearchParams, useRouter} from 'next/navigation';
+import {useDebouncedCallback} from "use-debounce";
 
 export default function Search({placeholder}: { placeholder: string }) {
     const searchParams = useSearchParams(); // クエリパラメータの取得
     const pathname = usePathname();
-    const { replace } = useRouter();
-    const handleSearch = (term: string) => {
-        const params = new URLSearchParams(searchParams);
-        if (term) {
-            params.set('query', term);
-        } else {
-            params.delete('query');
+    const {replace} = useRouter();
+    const handleSearch = useDebouncedCallback(
+        (term: string) => {
+            const params = new URLSearchParams(searchParams);
+            if (term) {
+                params.set('query', term);
+            } else {
+                params.delete('query');
+            }
+            replace(`${pathname}?${params.toString()}`); // リレンダリングが実行される
         }
-        replace(`${pathname}?${params.toString()}`);
-    }
+    , 300);
 
     return (
         <div className="relative flex flex-1 flex-shrink-0">

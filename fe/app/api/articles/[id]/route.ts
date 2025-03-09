@@ -1,5 +1,4 @@
 import axios from "axios";
-import {mockArticles} from "@/data/mock";
 import {NextRequest, NextResponse} from "next/server";
 
 const api = axios.create({
@@ -13,11 +12,9 @@ const api = axios.create({
 export async function GET(req: NextRequest){
     try {
         const url = new URL(req.url);
-        const id = url.pathname.split("/").pop();
+        const id = url.pathname.split("/").pop(); // TODO idのバリデーション入れるか？
 
-        const article = process.env.NODE_ENV === 'development' ?
-            mockArticles.find(article => article.id === id) :
-            (await api.get(`/articles/${id}`)).data;
+        const article = (await api.get(`/articles/${id}`)).data;
         return NextResponse.json(article);
     } catch (error) {
         console.log(error);

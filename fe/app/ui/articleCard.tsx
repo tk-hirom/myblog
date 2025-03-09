@@ -9,9 +9,9 @@ export const ArticleCard = ({article}: { article: FetchArticleResponse }) => {
         <Link href={`/articles/${article.id}`}>
             <div
                 className="bg-white shadow-md rounded-2xl overflow-hidden transition-transform duration-200 hover:scale-105">
-                {article.thumbnail && (
+                {article.thumbnailPath && (
                     <Image
-                        src={article.thumbnail}
+                        src={article.thumbnailPath}
                         alt={article.title}
                         width={600}
                         height={300}
@@ -20,7 +20,7 @@ export const ArticleCard = ({article}: { article: FetchArticleResponse }) => {
                 )}
                 <div className="p-4">
                     <h2 className="text-xl font-bold text-gray-900">{article.title}</h2>
-                    <p className="text-sm text-gray-500">{article.date}</p>
+                    <p className="text-sm text-gray-500">{article.updatedAt}</p>
                     <div className="mt-2 flex gap-2">
                         <TagsList article={article}/>
                     </div>

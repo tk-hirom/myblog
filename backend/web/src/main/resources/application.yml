@@ -1,6 +1,6 @@
 logging:
   level:
-    com.example.app.web: DEBUG
+    com.backend.app.web: DEBUG
 spring:
   profiles:
     active: dev
@@ -8,7 +8,7 @@ spring:
     resources:
       add-mappings: false
   datasource:
-    url: "jdbc:postgresql://localhost:5432/bookdb"
+    url: "jdbc:postgresql://localhost:5555/articledb"
     username: "user"
     password: "p@ssw0rd"
     driver-class-name: "org.postgresql.Driver"

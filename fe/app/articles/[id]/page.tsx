@@ -29,7 +29,7 @@ export default async function Page(
     }
 ) {
     const articleId =  (await params).id
-    const article = await fetchArticle(articleId)
+    const article: FetchArticleResponse | undefined = await fetchArticle(articleId)
      if (!article) return <div>The article is not found</div>
 
     return (
@@ -38,7 +38,7 @@ export default async function Page(
                 {/* サムネイル画像 */}
                 <div className="mb-6 relative w-full h-64">
                     <Image
-                        src={article.thumbnail}
+                        src={article.thumbnailPath}
                         alt={article.title}
                         layout="fill" // 画像を親要素に合わせて拡大縮小
                         objectFit="cover" // 親要素に合わせて画像をカバー
@@ -50,7 +50,7 @@ export default async function Page(
                 <div className="mt-6 flex gap-2">
                     <TagsList article={article}/>
                 </div>
-                <p className="text-sm text-gray-500 mb-4">{article.date}</p>
+                <p className="text-sm text-gray-500 mb-4">{article.updatedAt}</p>
                 <div className="text-lg text-gray-700 space-y-4" dangerouslySetInnerHTML={{ __html: article.body }} />
             </div>
         </div>
