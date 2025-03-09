@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  article-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: p@ssw0rd
+      POSTGRES_USER: user
+      POSTGRES_DB: articledb
+    ports:
+      - "5555:5432"
+    volumes:
+      - article_data:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+
+volumes:
+  article_data:
